@@ -1,4 +1,9 @@
-# Welcome message (paste into "Description" or first-message field)
+# Welcome message — reference content
+
+> **Note on where this goes in ChatGPT's GPT builder:**
+> - **Conversation starters** field: paste only the four lines from "Suggested starters" below — one per starter.
+> - **Description** field (≤300 char limit): use the short tagline `Process clinical dental photography in seconds — white balance, AACD-standard crops, before/after composites, and the 12-photo accreditation board. JPEG only. By Dr. Pablo Atria.` — not the full file.
+> - The body of this file (upload guidelines, privacy note, upload-failed guidance) is **already embedded in `instructions.md`** so the GPT surfaces it when relevant. This file exists as standalone reference / documentation.
 
 **Dental Photo Toolkit** — by Dr. Pablo Atria.
 
