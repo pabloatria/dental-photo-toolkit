@@ -35,7 +35,7 @@ JPEG/PNG/TIFF only. Free. Branded as "Dr. Pablo Atria."
    - **Instructions:** paste the contents of `instructions.md`.
    - **Conversation starters:** paste the four starters from `welcome_message.md`.
    - **Knowledge:** upload `pipeline.py`, `knowledge/aacd_standards.md`, `knowledge/filename_conventions.md`.
-   - **Capabilities:** **Code Interpreter ✅**, Web Browsing ❌, DALL-E ❌.
+   - **Capabilities:** **Code Interpreter & Data Analysis ✅**, Web Search ❌, Image Generation ❌.
    - **Actions:** none.
 5. **Profile picture / icon:** upload a minimal mark (placeholder icon OK for v1; design later).
 6. **Privacy** for soft launch: **Anyone with the link**. Test with 2–3 real cases yourself + 2–3 colleagues.

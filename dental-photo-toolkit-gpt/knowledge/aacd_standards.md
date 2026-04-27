@@ -64,7 +64,7 @@ EAED accreditation overlaps heavily with AACD but differs in:
 - Allows 14-photo series (adds 1:1 and a "natural lighting" full-face)
 - Color profile expectations are slightly stricter; cross-polarized images often required for restorative submissions
 
-Pass `--standard eaed` to the script to switch to the EAED layout. The extra views are pulled from the same case folder if present.
+EAED's 14-photo variant is out of scope for v1 of this GPT. The Claude skill version supports it via `--standard eaed`.
 
 ## Filename keywords the classifier recognizes
 

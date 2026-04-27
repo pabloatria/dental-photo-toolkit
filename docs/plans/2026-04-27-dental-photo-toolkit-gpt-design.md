@@ -71,7 +71,7 @@ Drop-and-go (locked at the brainstorming stage):
 | GPT name | **Dental Photo Toolkit by Dr. Pablo Atria** |
 | Description | "Process clinical dental photography in seconds — white balance, AACD-standard crops, before/after composites, and the 12-photo accreditation board. JPEG only. By Dr. Pablo Atria." |
 | Icon | Minimal mark — likely a stylized tooth + grid motif. Final design TBD. |
-| Watermark on output board | "Generated with Dental Photo Toolkit · Pablo Atria" — 6pt figure-legend style, bottom-right, subtle. Toggleable via "remove watermark" follow-up. |
+| Watermark on output board | "Generated with Dental Photo Toolkit | Pablo Atria" (vertical bar — chosen because OpenCV's Hershey fonts only support ASCII) — 6pt figure-legend style, bottom-right, subtle. Toggleable via "remove watermark" follow-up. |
 | Tone | Clinical, precise, English. No emoji, no marketing language. Matches Pablo's voice (scientific precision + aesthetic restraint). |
 
 ## Architecture
