@@ -18,6 +18,10 @@ Drop a folder of clinical photos (JPEG, PNG, or TIFF — or one ZIP) and I'll re
 - **For an AACD board:** at least 8 of the 12 standard views. Missing views render as labeled placeholders.
 - **For a before/after:** at least one matched pre/post pair (same view name).
 
+## If upload fails
+
+A 500 error or "server is having problems" message comes from ChatGPT's upload service, not from this tool — your file never reached the toolkit. Wait 30 seconds and retry. If it keeps failing, try one file at a time, drop file size below 10 MB, or switch browsers.
+
 ## Patient privacy
 
 Uploads transit ChatGPT's standard infrastructure — not a HIPAA-covered environment. Do not upload identifiable patient photos without consent, and follow your jurisdiction's PHI rules (HIPAA in the US, Ley 19.628 in Chile, GDPR in the EU). Faces are visible in views 1–3 (full face, profile). Crop or de-identify as needed before uploading.
