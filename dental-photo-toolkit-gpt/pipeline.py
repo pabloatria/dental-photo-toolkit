@@ -12,14 +12,12 @@ from __future__ import annotations
 import argparse
 import csv
 import re
-import shutil
 import sys
 import tempfile
 import zipfile
 from collections import defaultdict
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Iterable, Optional
 
 import cv2
 import numpy as np
@@ -52,7 +50,6 @@ VIEW_PATTERNS = {
     10: ["retracted_left", "lateral_left", "lat_izq", "retraido_izquierda"],
     11: ["occlusal_max", "oclusal_sup", "upper_occlusal", "maxillary_occlusal"],
     12: ["occlusal_mand", "oclusal_inf", "lower_occlusal", "mandibular_occlusal"],
-    13: ["1to1", "oneone", "close_anterior", "anterior_closeup"],
 }
 
 VIEW_LABELS = {
@@ -68,7 +65,6 @@ VIEW_LABELS = {
     10: "Retracted left lateral",
     11: "Maxillary occlusal",
     12: "Mandibular occlusal",
-    13: "EAED 1:1 anterior close-up",
 }
 
 
@@ -294,7 +290,6 @@ VIEW_ASPECT = {
     4: (3, 2), 5: (3, 2), 6: (3, 2),
     7: (3, 2), 8: (3, 2), 9: (3, 2), 10: (3, 2),
     11: (4, 3), 12: (4, 3),
-    13: (1, 1),
 }
 OCCLUSAL_VIEWS = {11, 12}
 
@@ -332,7 +327,7 @@ BOARD_GRID = (4, 3)
 BOARD_BG = (255, 255, 255)
 LABEL_FONT = cv2.FONT_HERSHEY_SIMPLEX
 LABEL_COLOR = (40, 40, 40)
-WATERMARK_TEXT = "Generated with Dental Photo Toolkit · Pablo Atria"
+WATERMARK_TEXT = "Generated with Dental Photo Toolkit | Pablo Atria"
 
 
 def fit_into(img, cell_w, cell_h, bg=(255, 255, 255)):
@@ -429,6 +424,8 @@ def _stem(rec: PhotoRecord) -> str:
 def run_pipeline(case_folder: Path, work_dir: Path, watermark: bool = True) -> None:
     work_dir.mkdir(parents=True, exist_ok=True)
     records = scan_case(case_folder)
+    if not records:
+        print(f"No supported images found in {case_folder}", file=sys.stderr)
     with open(work_dir / "manifest.csv", "w", newline="") as f:
         if records:
             writer = csv.DictWriter(f, fieldnames=list(asdict(records[0]).keys()))
