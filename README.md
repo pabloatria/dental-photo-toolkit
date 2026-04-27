@@ -92,11 +92,13 @@ This tool performs photographic post-processing only. It does not provide clinic
 
 ## About
 
-Built by [Dr. Pablo J. Atria](https://github.com/pabloatria) (DDS, MS, PhD) — Director of the Operative and Digital Dentistry Advanced Clinical Fellowship at NYU College of Dentistry, and co-director of Clínica AS Odontología (Santiago, Chile).
+Built by [Dr. Pablo J. Atria](https://github.com/pabloatria) (DDS, MS, PhD) — Director of the Operative and Digital Dentistry Advanced Clinical Fellowship at NYU College of Dentistry, and co-director of [Clínica AS Odontología Digital](https://www.asodontologiadigital.cl) (Santiago, Chile).
 
 This toolkit exists because clinical photography sits between art and evidence: it has to be aesthetically clean (presentation, social, publication) AND metrologically honest (shade decisions, longitudinal comparison). The most expensive mistake is publishing a case where white balance drifted between visits — the "after" looks better only because the camera saw it differently. This toolkit enforces consistency without flattening the image.
 
 The output is yours. There is no watermark. Use the processed photos in your own publications, accreditation submissions, courses, and patient communication freely.
+
+More clinical work: [asodontologiadigital.cl](https://www.asodontologiadigital.cl) · Instagram [@pabloatria](https://www.instagram.com/pabloatria)
 
 ---
 
