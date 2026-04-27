@@ -16,3 +16,6 @@ env/
 dist/
 build/
 _processed/
+
+# Internal design / build notes — not for the public repo
+docs/plans/

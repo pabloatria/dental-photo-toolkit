@@ -120,14 +120,13 @@ dental-photo-toolkit/
 │   ├── scripts/
 │   ├── references/
 │   └── requirements.txt
-├── dental-photo-toolkit-gpt/         # ChatGPT Custom GPT artifacts
-│   ├── pipeline.py                   # single-file JPEG pipeline
-│   ├── instructions.md               # GPT system prompt
-│   ├── welcome_message.md            # GPT welcome / starters
-│   ├── knowledge/                    # AACD reference files
-│   ├── PUBLISHING.md                 # how to publish to the GPT Store
-│   └── test_pipeline.py
-└── docs/plans/                       # design + implementation history
+└── dental-photo-toolkit-gpt/         # ChatGPT Custom GPT artifacts
+    ├── pipeline.py                   # single-file JPEG pipeline
+    ├── instructions.md               # GPT system prompt
+    ├── welcome_message.md            # GPT welcome / starters
+    ├── knowledge/                    # AACD reference files
+    ├── PUBLISHING.md                 # how to publish to the GPT Store
+    └── test_pipeline.py
 ```
 
 ---
