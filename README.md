@@ -14,9 +14,7 @@ Pick the one that matches the tool you already work in.
 
 A Custom GPT that processes your photos inside ChatGPT. Drop a folder (or a ZIP), get a clean AACD board and a downloadable archive of every output. JPEG, PNG, or TIFF only.
 
-**[Open the GPT in ChatGPT →](https://chat.openai.com/g/PASTE-GPT-URL-AFTER-PUBLISH)**
-
-> The link will activate once the GPT is published to the OpenAI GPT Store. Until then, it is in soft-launch — see `dental-photo-toolkit-gpt/PUBLISHING.md` for direct-link distribution.
+**[Open the GPT in ChatGPT →](https://chatgpt.com/g/g-69ef6afd5c948191941a7b370eef0032-dental-photo-toolkit-by-dr-pablo-atria)**
 
 Requirements: ChatGPT Plus account (Custom GPTs require Plus).
 
