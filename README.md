@@ -6,6 +6,7 @@
 [![Claude Skill](https://img.shields.io/badge/Claude-Skill-D97757)](#claude-code--recommended-if-you-shoot-raw-or-want-full-local-control)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](#)
+[![Security Audited](https://img.shields.io/badge/security-audited-brightgreen.svg)](SECURITY.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/pabloatria/dental-photo-toolkit/issues)
 
 By Dr. Pablo Atria.

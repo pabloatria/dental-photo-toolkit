@@ -21,6 +21,17 @@ from pathlib import Path
 
 import cv2
 import numpy as np
+from PIL import Image
+
+# ---------------------------------------------------------------- security
+
+# Per-image pixel cap. Covers any clinical DSLR/mirrorless sensor (~50 MP today)
+# with headroom. A 65,535 × 65,535 decompression bomb is ~12 GB; this caps at
+# ~240 MB worst case, which the Code Interpreter sandbox can survive.
+MAX_PIXELS = 80_000_000
+
+# Pillow's own decompression-bomb guard. Defense in depth.
+Image.MAX_IMAGE_PIXELS = MAX_PIXELS
 
 # ---------------------------------------------------------------- classify
 
@@ -152,10 +163,49 @@ class WBResult:
 
 
 def _read_image(path: Path) -> np.ndarray:
+    # Probe header dimensions without decoding pixels. Refuses decompression
+    # bombs before OpenCV allocates the frame buffer.
+    # Restrict Pillow's auto-dispatch to image formats we actually support —
+    # blocks PSD/FITS code paths that have had bomb CVEs.
+    try:
+        with Image.open(path, formats=("JPEG", "PNG", "TIFF")) as probe:
+            w, h = probe.size
+    except Exception as e:
+        raise RuntimeError(f"Could not read image header {path}: {e}")
+    if w * h > MAX_PIXELS:
+        raise RuntimeError(
+            f"Image too large: {w}x{h} ({w*h:,} px > {MAX_PIXELS:,} px cap) — {path.name}"
+        )
     img = cv2.imread(str(path), cv2.IMREAD_COLOR)
     if img is None:
         raise RuntimeError(f"Could not read {path}")
     return img
+
+
+def safe_unzip(zip_path: Path, dest: Path) -> None:
+    """Extract zip_path into dest, refusing path traversal and absolute paths.
+
+    Use this instead of ZipFile.extractall for any user-supplied archive. The
+    GPT instructions explicitly forbid extractall on uploads.
+    """
+    dest = dest.resolve()
+    dest.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(zip_path) as z:
+        for member in z.infolist():
+            name = member.filename
+            if name.endswith("/"):
+                continue
+            # Reject absolute paths, drive letters, and any traversal.
+            if name.startswith(("/", "\\")) or ":" in name or ".." in Path(name).parts:
+                raise RuntimeError(f"Unsafe path in zip: {name!r}")
+            target = (dest / name).resolve()
+            # Belt and braces: the resolved target must stay under dest.
+            if not (str(target) == str(dest) or
+                    str(target).startswith(str(dest) + "/")):
+                raise RuntimeError(f"Zip entry escapes dest: {name!r}")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with z.open(member) as src, open(target, "wb") as dst:
+                dst.write(src.read())
 
 
 def _apply_gain(img, gain_bgr):

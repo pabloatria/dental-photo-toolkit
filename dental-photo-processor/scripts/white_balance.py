@@ -15,6 +15,7 @@ from typing import Optional
 
 import cv2
 import numpy as np
+from PIL import Image
 
 # Tunable parameters — see references/white_balance_method.md
 SPECULAR_PERCENTILE = 99
@@ -24,6 +25,11 @@ GRAYWORLD_DAMPING = 0.6
 SKIN_LAB_RANGE = ((30, 5, 10), (80, 25, 35))   # (Lmin,amin,bmin)-(Lmax,amax,bmax)
 SKIN_ANCHOR_AB = (15.0, 18.0)
 SKIN_PROTECTION_THRESHOLD = 6.0  # ΔE in a*b*
+
+# Decompression-bomb cap. Covers any clinical DSLR/mirrorless sensor (~50 MP)
+# with headroom; rejects crafted images claiming dimensions designed to OOM.
+MAX_PIXELS = 80_000_000
+Image.MAX_IMAGE_PIXELS = MAX_PIXELS
 
 
 @dataclass
@@ -39,6 +45,8 @@ def _read_image(path: Path) -> np.ndarray:
     """Read JPEG/PNG/TIF or RAW into BGR uint8 (8-bit working space)."""
     suffix = path.suffix.lower()
     if suffix in {".cr3", ".cr2", ".nef", ".arw", ".dng", ".raf", ".rw2", ".orf"}:
+        # RAW path: rawpy decodes from camera sensor data, not a compressed
+        # container — decompression bombs aren't a vector here. Trust the file.
         try:
             import rawpy
         except ImportError as e:
@@ -53,6 +61,19 @@ def _read_image(path: Path) -> np.ndarray:
                 gamma=(2.222, 4.5),
             )
         return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
+    # Compressed path (JPEG/PNG/TIFF): probe header dimensions before decoding.
+    # Refuses decompression bombs before OpenCV allocates the frame buffer.
+    # Restrict Pillow's auto-dispatch to formats we actually use — blocks
+    # PSD/FITS code paths that have had bomb CVEs.
+    try:
+        with Image.open(path, formats=("JPEG", "PNG", "TIFF")) as probe:
+            w, h = probe.size
+    except Exception as e:
+        raise RuntimeError(f"Could not read image header {path}: {e}")
+    if w * h > MAX_PIXELS:
+        raise RuntimeError(
+            f"Image too large: {w}x{h} ({w*h:,} px > {MAX_PIXELS:,} px cap) — {path.name}"
+        )
     img = cv2.imread(str(path), cv2.IMREAD_COLOR)
     if img is None:
         raise RuntimeError(f"Could not read {path}")
