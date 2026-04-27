@@ -132,6 +132,32 @@ dental-photo-toolkit/
 
 ---
 
+## Staying up to date
+
+**ChatGPT users:** nothing to do. The GPT runs the latest version automatically.
+
+**Claude Code users (cloned the repo):** to pick up new fixes, run:
+
+```bash
+cd dental-photo-toolkit
+git pull
+pip install -r dental-photo-processor/requirements.txt --upgrade
+```
+
+If you copied the skill into `~/.claude/skills/`, also re-copy after pulling:
+
+```bash
+cp -r dental-photo-processor ~/.claude/skills/
+```
+
+To get notified when a new version ships, click **Watch** at the top of the [GitHub repo](https://github.com/pabloatria/dental-photo-toolkit) → **Custom** → check **Releases**. You'll get an email per release, no other notifications.
+
+Releases follow [semver](https://semver.org/): patch versions (`v0.1.x`) are bug or security fixes that are safe to take blind; minor versions (`v0.x.0`) add features without breaking anything; major versions (`v1.0.0`+) signal something you should read the release notes for.
+
+See [all releases →](https://github.com/pabloatria/dental-photo-toolkit/releases)
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
