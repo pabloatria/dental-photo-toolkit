@@ -1,6 +1,12 @@
 # Dental Photo Toolkit
 
-Post-processing for clinical dental photography — white balance, AACD-standard crops, before/after composites, and the 12-photo accreditation board, in a few seconds.
+> Post-processing for clinical dental photography — white balance, AACD-standard crops, before/after composites, and the 12-photo accreditation board, in a few seconds.
+
+[![Try in ChatGPT](https://img.shields.io/badge/Try%20in-ChatGPT-10A37F?logo=openai&logoColor=white)](https://chatgpt.com/g/g-69ef6afd5c948191941a7b370eef0032-dental-photo-toolkit-by-dr-pablo-atria)
+[![Claude Skill](https://img.shields.io/badge/Claude-Skill-D97757)](#claude-code--recommended-if-you-shoot-raw-or-want-full-local-control)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](#)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/pabloatria/dental-photo-toolkit/issues)
 
 By Dr. Pablo Atria.
 
