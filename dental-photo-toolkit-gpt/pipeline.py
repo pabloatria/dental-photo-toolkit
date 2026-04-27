@@ -327,7 +327,6 @@ BOARD_GRID = (4, 3)
 BOARD_BG = (255, 255, 255)
 LABEL_FONT = cv2.FONT_HERSHEY_SIMPLEX
 LABEL_COLOR = (40, 40, 40)
-WATERMARK_TEXT = "Generated with Dental Photo Toolkit | Pablo Atria"
 
 
 def fit_into(img, cell_w, cell_h, bg=(255, 255, 255)):
@@ -354,7 +353,7 @@ def before_after(before, after):
     return np.hstack([left, gap, right])
 
 
-def aacd_board(views, watermark=True):
+def aacd_board(views):
     cols, rows = BOARD_GRID
     W = int(BOARD_INCHES[0] * BOARD_DPI)
     H = int(BOARD_INCHES[1] * BOARD_DPI)
@@ -384,11 +383,6 @@ def aacd_board(views, watermark=True):
         cv2.putText(board, str(view_num),
                     (x0 + cell_w - 24, y0 + cell_h - 8),
                     LABEL_FONT, 0.5, LABEL_COLOR, 1, cv2.LINE_AA)
-    if watermark:
-        (tw, th), _ = cv2.getTextSize(WATERMARK_TEXT, LABEL_FONT, 0.4, 1)
-        cv2.putText(board, WATERMARK_TEXT,
-                    (W - margin - tw, H - margin // 3),
-                    LABEL_FONT, 0.4, (160, 160, 160), 1, cv2.LINE_AA)
     return board
 
 
@@ -421,7 +415,7 @@ def _stem(rec: PhotoRecord) -> str:
     return f"{rec.timepoint}_v{rec.view_number:02d}_{rec.polarization}_{p.stem}"
 
 
-def run_pipeline(case_folder: Path, work_dir: Path, watermark: bool = True) -> None:
+def run_pipeline(case_folder: Path, work_dir: Path) -> None:
     work_dir.mkdir(parents=True, exist_ok=True)
     records = scan_case(case_folder)
     if not records:
@@ -478,7 +472,7 @@ def run_pipeline(case_folder: Path, work_dir: Path, watermark: bool = True) -> N
         views = {r.view_number: (cropped[r.path] if r.path in cropped
                                  else wb_results[r.path].image)
                  for r in tp_recs}
-        board = aacd_board(views, watermark=watermark)
+        board = aacd_board(views)
         write_image(board, work_dir / "boards" / f"{tp}_aacd_board.png")
 
     by_tp = defaultdict(int)
@@ -508,8 +502,6 @@ def main() -> None:
     parser.add_argument("case_folder", type=Path)
     parser.add_argument("--output", type=Path, required=True,
                         help="Output ZIP path")
-    parser.add_argument("--watermark", action="store_true", default=True)
-    parser.add_argument("--no-watermark", dest="watermark", action="store_false")
     args = parser.parse_args()
 
     if not args.case_folder.exists():
@@ -517,7 +509,7 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         work = Path(tmp) / "out"
-        run_pipeline(args.case_folder, work, watermark=args.watermark)
+        run_pipeline(args.case_folder, work)
         zip_dir(work, args.output)
     print(f"Wrote {args.output}")
 
